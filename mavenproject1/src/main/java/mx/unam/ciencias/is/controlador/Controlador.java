@@ -23,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller 
 public class Controlador {
-    /*Injectamos el modelo del marcador */
+    /*Injectamos el modelo del marcador se autoinicializa*/
     @Autowired
     MarcadorDAO marcador_db;
     
@@ -87,17 +87,47 @@ public class Controlador {
     @RequestMapping(value="/actualizaM", method = RequestMethod.GET)
     public ModelAndView actualizaM(ModelMap model,HttpServletRequest request){
         //Aqui va tu codigo
-    
+        Double latitud = Double.parseDouble(request.getParameter("latitud"));
+        Double longitud = Double.parseDouble(request.getParameter("longitud"));
+         Marcador ma = marcador_db.getMarcador(latitud,longitud);
+         model.addAttribute("marcador",ma);
+         return new ModelAndView("actualizaM",model);
+      
     }
     
     
     @RequestMapping(value="/eliminaMarcador", method = RequestMethod.GET)
     public String eliminaMarcador(HttpServletRequest request){
         //Aqui va tu codigo
+        Double latitud = Double.parseDouble(request.getParameter("latitud"));
+        Double longitud = Double.parseDouble(request.getParameter("longitud"));
+        Marcador ma = marcador_db.getMarcador(latitud, longitud);
+        if(ma!=null){
+            marcador_db.eliminar(ma);
+        }
+        return "redirect:/";
     }
     
     @RequestMapping(value= "/actualizar", method = RequestMethod.POST)
     public String actualizar(HttpServletRequest request){
-        //Aqui va tu codigo   
+        //Aqui va tu codigo
+        int id=Integer.parseInt(request.getParameter("id"));
+        Double latitud = Double.parseDouble(request.getParameter("latitud"));
+        Double longitud = Double.parseDouble(request.getParameter("longitud"));
+        String nombre = request.getParameter("nombre");
+        String descripcion = request.getParameter("descripcion");
+        Marcador ma = marcador_db.getMarcadorId(id);
+        if(ma!=null){
+          if(!descripcion.equals(""))
+              ma.setDescripcion(descripcion);
+              if(!nombre.equals(""))
+                  ma.setNombre_m(nombre);
+              marcador_db.actualizar(ma);
+        
+        }
+        return "redirect:/";
+
+        
     }
 }
+
