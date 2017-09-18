@@ -42,7 +42,7 @@
                     </thead>
                     <c:forEach var="m" items="${marcadores}">
                         <tbody>
-                            <th>${m.nombre}</th>
+                            <th>${m.nombre_m}</th>
                             <th>${m.latitud}</th>
                             <th>${m.longitud}</th>
                             <th>
@@ -68,7 +68,7 @@
                             '<h1 id="firstHeading" class="firstHeading">'+nom+'</h1>'+
                             '<div id="bodyContent">'+
                              '<p>'+des+'</p>'+
-                             '<form action="/Marcadores/eliminaMarcador" method="GET">'+
+                             '<form action="/mavenproject1/eliminaMarcador" method="GET">'+
                              '<input id="latitud" name="latitud" hidden="true" value="'+lat+'">'+
                              '<input id="longitud" name="longitud" hidden="true" value="'+lon+'">'+
                              '<button type="submit" class="btn btn-primary btn-lg active">Eliminame</button>'+
@@ -93,7 +93,7 @@
             
             markerName = [
                 <c:forEach var="s" items="${marcadores}" varStatus="status">
-                "${s.nombre}",
+                "${s.nombre_m}",
                 </c:forEach>];
             
             markerDescr = [
@@ -103,7 +103,7 @@
     
             map = new google.maps.Map(document.getElementById('mapa'), {
                 center: {lat: 19.323447, lng: -99.179521},
-                zoom: 3
+                zoom: 15
             });
     
             var infowindow = new google.maps.InfoWindow(); 

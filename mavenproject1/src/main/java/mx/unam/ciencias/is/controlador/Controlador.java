@@ -99,9 +99,9 @@ public class Controlador {
     @RequestMapping(value="/eliminaMarcador", method = RequestMethod.GET)
     public String eliminaMarcador(HttpServletRequest request){
         //Aqui va tu codigo
-        Double latitud = Double.parseDouble(request.getParameter("latitud"));
-        Double longitud = Double.parseDouble(request.getParameter("longitud"));
-        Marcador ma = marcador_db.getMarcador(latitud, longitud);
+        Double la = Double.parseDouble(request.getParameter("latitud"));
+        Double lon = Double.parseDouble(request.getParameter("longitud"));
+        Marcador ma = marcador_db.getMarcador(la, lon);
         if(ma!=null){
             marcador_db.eliminar(ma);
         }
