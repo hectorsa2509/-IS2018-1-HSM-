@@ -14,7 +14,7 @@ import javax.persistence.Table;
  * @author Héctor Santaella Marín
  */
 @Entity
-@Table (name="usuario")
+@Table (name="Usuario")
 
 
 public class Usuario {
@@ -59,7 +59,16 @@ public class Usuario {
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
-    @OneToMany(mappedBy="usuario")
+    @OneToMany(mappedBy="user")
     private Set<Marcador> marcadores;
+
+    public void setMarcadores(Set<Marcador> marcadores) {
+        this.marcadores = marcadores;
+    }
+
+    public Set<Marcador> getMarcadores() {
+        return marcadores;
+    }
+    
     
 }

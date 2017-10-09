@@ -9,6 +9,7 @@ import java.security.Principal;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import mx.unam.ciencias.is.mapeobd.Marcador;
+import mx.unam.ciencias.is.mapeobd.Usuario;
 import mx.unam.ciencias.is.modelo.MarcadorDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,7 @@ public class Controlador {
      * @param model 
      * @return regresa el modelo 
      */
-    @RequestMapping(value="/", method = RequestMethod.GET)
+    @RequestMapping(value="/iniciolog", method = RequestMethod.GET)
     public ModelAndView marcadores(ModelMap model){
         List<Marcador> mar = marcador_db.getMarcadores();
           
@@ -65,15 +66,20 @@ public class Controlador {
         String descripcion = request.getParameter("descripcion");
         Marcador ma = marcador_db.getMarcador(latitud, longitud);
         if(ma==null){
+            Usuario u=new Usuario();
+            u.setContrasena("123");
+            u.setCorreo("123");
+            u.setNickname("123");
             Marcador m  = new Marcador();
             m.setLatitud(latitud);
             m.setLongitud(longitud);
             m.setNombre_m(nombre);
             m.setDescripcion(descripcion);
+            m.setUsuario(u);
             marcador_db.guardar(m);
         
         }
-        return "redirect:/";
+        return "redirect:/inicio";
     }
     
     

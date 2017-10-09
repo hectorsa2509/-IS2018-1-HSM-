@@ -118,4 +118,8 @@ public class Marcador {
     
     
     //Aqui va tu codigo
+
+    public void setUsuario(Usuario u) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

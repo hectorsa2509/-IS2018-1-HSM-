@@ -11,6 +11,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+
 /**
  *
  * @author jonathan
@@ -64,55 +65,57 @@ public class MarcadorDAO {
      * @return la lista que contiene a todos los marcadores de la base de datos
      */
     public List<Marcador> getMarcadores(){
-        List<Marcador> result = null;
-        Session session = sessionFactory.openSession();
+        List<Marcador> marcadores = null;
+        Marcador m = null;
+        Session s = sessionFactory.openSession();
         Transaction tx = null;
         try{
-            tx = session.beginTransaction();
-            String hql = "FROM Marcador";
-            Query query = session.createQuery(hql);
-            result = (List<Marcador>)query.list();
+            tx = s.beginTransaction();
+            String hql = " From Marcador";
+            Query query = s.createQuery(hql);
+            marcadores = (List<Marcador>)query.list();
             tx.commit();
-        }
-        catch(Exception e) {
-            if (tx != null){
+           
+        }catch(Exception e){
+            if(tx!=null)
                 tx.rollback();
-            }
             e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return result;
+        //kill!
+        }finally{
+           s.close();
+       }
+       return marcadores;
     }
     
     /**
      * Regresa el marcador con la longitud  y latitud dada. 
-     * @param latitud
+     * @param lattitud
      * @param longitud
      * @return el marcador con la longitud y latitud dada.
      */
     public Marcador getMarcador(double latitud,double longitud) {
-        Marcador result = null;
-        Session session = sessionFactory.openSession();
-        Transaction tx = null;
-        try{
-            tx = session.beginTransaction();
-            String hql = "FROM Marcador WHERE latitud=:latitud AND longitud=:longitud";
-            Query query = session.createQuery(hql);
-            query.setParameter("latitud",latitud);
-            query.setParameter("longitud",longitud);
-            result = (Marcador)query.uniqueResult();
-            tx.commit();
-        }
-        catch(Exception e) {
-            if (tx != null){
-                tx.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return result;
+       Marcador m = null;
+       Session s = sessionFactory.openSession();
+       Transaction tx = null;
+       try{
+           tx = s.beginTransaction();
+           String hql = " From Marcador where"
+                   + "varLatitud = :lat and"
+                   + "varLongitud = :long";
+           Query query = s.createQuery(hql);
+           query.setParameter("lat",latitud);
+           query.setParameter("long",longitud);
+           m = (Marcador)query.uniqueResult();
+           tx.commit();
+       }catch(Exception e){
+           if(tx!=null)
+               tx.rollback();
+           e.printStackTrace();
+       //kill!
+       }finally{
+           s.close();
+       }
+       return m;
     }
     
     /**
@@ -121,25 +124,26 @@ public class MarcadorDAO {
      * @return el marcador con ese id
      */
     public Marcador getMarcadorId(int id) {
-        Marcador result = null;
-        Session session = sessionFactory.openSession();
-        Transaction tx = null;
-        try{
-            tx = session.beginTransaction();
-            String hql = "FROM Marcador WHERE idmarcador =:id ";
-            Query query = session.createQuery(hql);
-            result = (Marcador)query.uniqueResult();
-            tx.commit();
-        }
-        catch(Exception e) {
-            if (tx != null){
-                tx.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return result;   
+        Marcador m = null;
+       Session s = sessionFactory.openSession();
+       Transaction tx = null;
+       try{
+           tx = s.beginTransaction();
+           String hql = " From Marcador where"
+                   + "varMarcador_id = :id ";
+           Query query = s.createQuery(hql);
+           query.setParameter("id",id);
+           m = (Marcador)query.uniqueResult();
+           tx.commit();
+       }catch(Exception e){
+           if(tx!=null)
+               tx.rollback();
+           e.printStackTrace();
+       //kill!
+       }finally{
+           s.close();
+       }
+       return m;
     }
     
     
@@ -177,7 +181,7 @@ public class MarcadorDAO {
      * @param marcador con los nuevos valores 
      */
     public void actualizar(Marcador marcador) {
-        //se inicia la sesion
+       //se inicia la sesion
         Session session = sessionFactory.openSession();
         //la transaccion a relizar
         Transaction tx = null;
